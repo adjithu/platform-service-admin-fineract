@@ -1,0 +1,64 @@
+{
+  "status": {
+    "statusCode": 1,
+    "messageDescription": null,
+    "errorCode": null,
+    "errorArguments": null
+  },
+  "message": {
+    "tenantId": null,
+    "userId": null,
+    "guid": "18b0292d-20e6-412e-b582-ad361fbe2483",
+    "page": null,
+    "size": null,
+    "pageable": null,
+    "entityStatus": "ACTIVE",
+    "code": "CBO_GROUP_TYPE_SHG",
+    "description": "SHG",
+    "defaultDisplayValue": "SHG",
+    "bankValue": "SHG",
+    "requiredByDevice": true,
+    "global": true,
+    "enterpriseCode": null,
+    "sortOrder": 2,
+    "dependentCodes": [],
+    "localeValues": [
+      {
+        "tenantId": null,
+        "userId": null,
+        "guid": "3e8faf58-19b2-4525-8edd-9a83eedcf3ae",
+        "page": null,
+        "size": null,
+        "pageable": null,
+        "entityStatus": null,
+        "locale": "kn_IN",
+        "value": "ಎಸ್.ಹೆಚ್.ಜಿ"
+      },
+      {
+        "tenantId": null,
+        "userId": null,
+        "guid": "a8218cc3-3892-4f8c-ace8-548ffd4f4d8c",
+        "page": null,
+        "size": null,
+        "pageable": null,
+        "entityStatus": null,
+        "locale": "hi_IN",
+        "value": "स्वयं सहायता समूह"
+      },
+      {
+        "tenantId": null,
+        "userId": null,
+        "guid": "4ba2d22d-ae32-4f96-a068-aa1d1c6dfc06",
+        "page": null,
+        "size": null,
+        "pageable": null,
+        "entityStatus": null,
+        "locale": "en_IN",
+        "value": "SHG"
+      }
+    ],
+    "drivenByCodes": [],
+    "parentCode": "CBO_GROUP_TYPE",
+    "default": false
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "status": {
+    "statusCode": 1,
+    "messageDescription": null,
+    "errorCode": null,
+    "errorArguments": null
+  },
+  "message": {
+    "tenantId": null,
+    "userId": null,
+    "guid": "9b4fdc07-605f-4827-a6d7-f00d0d25221c",
+    "page": null,
+    "size": null,
+    "pageable": null,
+    "entityStatus": "ACTIVE",
+    "code": "CBO_GROUP_TYPE_JLG",
+    "description": "JLG",
+    "defaultDisplayValue": "JLG",
+    "bankValue": "JLG",
+    "requiredByDevice": true,
+    "global": true,
+    "enterpriseCode": null,
+    "sortOrder": 1,
+    "dependentCodes": [],
+    "localeValues": [
+      {
+        "tenantId": null,
+        "userId": null,
+        "guid": "d87a84d8-86f3-4e05-9fdd-75a9a3dae813",
+        "page": null,
+        "size": null,
+        "pageable": null,
+        "entityStatus": null,
+        "locale": "kn_IN",
+        "value": "ಜೆಎಲ್ಜಿ"
+      },
+      {
+        "tenantId": null,
+        "userId": null,
+        "guid": "ad713ebb-9a9f-4c65-89a1-298a14f386b6",
+        "page": null,
+        "size": null,
+        "pageable": null,
+        "entityStatus": null,
+        "locale": "en_IN",
+        "value": "JLG"
+      },
+      {
+        "tenantId": null,
+        "userId": null,
+        "guid": "4a9a3cba-175f-4054-bf43-177b6f686cef",
+        "page": null,
+        "size": null,
+        "pageable": null,
+        "entityStatus": null,
+        "locale": "hi_IN",
+        "value": "जेएलजी"
+      }
+    ],
+    "drivenByCodes": [],
+    "parentCode": "CBO_GROUP_TYPE",
+    "default": false
+  }
+}

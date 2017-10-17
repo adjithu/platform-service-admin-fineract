@@ -1,0 +1,150 @@
+#### PLATFORM GROUPMANAGEMENT SERVICE BOOTSTRAP CONFIGURATIONS
+
+## TOMCAT CONFIGURATIONS
+server:
+  port: 6300
+  display-name: admin-service
+  connection-timeout: 10000
+  compression.enabled: true
+  tomcat:
+    apr.enabled: false
+    accept-count: 50
+    max-connections: 1024
+    max-threads: 100
+    min-spare-threads: 20
+  error:
+    include-stacktrace: never
+  ssl:
+    ciphers: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256
+    client-auth: want
+    enabled-protocols: TLSv1.2
+    protocol: TLS
+
+
+## REST CLIENT CONFIGURATIONS
+rest:
+  client:
+    connection.timeout: 10000
+    connection.request.timeout: 10000
+    socket.timeout: 10000
+    read.timout: 60000
+    ssl:
+      trust-self-signed: true
+      hostname.verifier.enabled: false
+      enabled-protocols: TLSv1.2
+      protocol: TLS
+  service: 
+    admin:
+      name: AdminService
+    enrollment:
+      name: EnrollmentService
+    familysurvey:
+      name: FamilySurveyService
+
+## SPRING CONFIGURATIONS
+spring:
+  application:
+    name: GroupManagementService
+
+  ## DATASOURCE CONFIGURATIONS
+  datasource:
+    tomcat:
+      validationQuery:  SELECT 1
+      testOnBorrow: true
+      testWhileIdle: true
+      testOnReturn: true
+      maxActive: 30
+      maxIdle: 10
+      timeBetweenEvictionRunsMillis: 30000
+      removeAbandoned: true
+      removeAbandonedTimeout: 180
+      logAbandoned: true
+
+  ## JPA CONFIGURATIONS
+  jpa:
+    hibernate:
+      #ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+
+  ## SLEUTH CONFIGURATIONS
+  sleuth:
+    enabled: true
+    sampler:
+      percentage: 1
+    scheduled:
+      skipPattern: "^org.*ConsulCatalogWatch$"
+    rxjava:
+      schedulers:
+        ignoredthreads: HystixMetricPoller,^RxComputation.*$
+
+  ## CONSUL CONFIGURATIONS
+  cloud:
+    consul:
+      enabled: false
+      discovery:
+        discovery:
+        register: false
+        instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+        healthCheckPath: /health
+        healthCheckInterval: 15s
+        prefer-ip-address: false
+        heartbeat:
+          enabled: false
+
+
+## REDIS CONFIGURATIONS
+redis:
+  sentinel:
+    master: platformMaster
+    nodes: 127.0.0.1:23679, 127.0.0.1:23680, 127.0.0.1:23681
+
+
+## JASYPT PROPERTY ENCRYPTOR
+jasypt:
+  encryptor:
+    algorithm: PBEWITHSHA1ANDDESEDE
+    stringOutputType: hexadecimal
+    bean: encryptorBean
+    providerName: SunJCE
+    password: ${JASYPT_ENCRYPTOR_PASSWORD:aeusapp@123}
+
+## ENDPOINT CONFIGURATIONS
+endpoints:
+  shutdown:
+    enabled: true
+
+## EUREKA CONFIGURATIONS
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+
+## LOGGING CONFIGURATIONS
+logging:
+  config: classpath:logback-spring.xml
+  levels:
+    org.springframework: INFO
+    com.davinta.aeus: TRACE
+  appenders:
+    name: console, rollingfile
+    rollingfile:
+      directory: /appdata/logs/groupmanagement-service
+      prefix: groupmanagement-service
+
+## RECON CONFIGURATIONS
+recon:
+  invalidFile:
+    canCreateFile: false
+    fileName: recon_exceptions
+    path: /platform/data/recon/exceptions
+    fileExtension: .txt
+
+global:
+    minimum:
+      groupMember: 1

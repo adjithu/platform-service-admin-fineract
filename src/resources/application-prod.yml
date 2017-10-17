@@ -1,0 +1,62 @@
+#### PLATFORM GROUPMANAGEMENT SERVICE APPLICATION TEST CONFIGURATIONS
+
+## SSL CONFIGURATIONS
+server:
+  ssl:
+    enabled: true
+    key-alias: aeusapp
+    key-password: ENC(E2C83D6C8F8E8FF789185CEDCBCDC9E08C14D39F0E707F9D)
+    key-store: /platform/certs/aeusapp-keystore.jks
+    key-store-password: ENC(E2C83D6C8F8E8FF789185CEDCBCDC9E08C14D39F0E707F9D)
+    trust-store: /platform/certs/aeusapp-truststore.jks
+    trust-store-password: ENC(E2C83D6C8F8E8FF789185CEDCBCDC9E08C14D39F0E707F9D)
+
+
+## REST CLIENT SSL CONFIGURATIONS
+rest:
+  client:
+    ssl:
+      enabled: true
+      key-alias: aeusapp
+      key-password: ENC(E2C83D6C8F8E8FF789185CEDCBCDC9E08C14D39F0E707F9D)
+      key-store: /platform/certs/aeusapp-keystore.jks
+      key-store-password: ENC(E2C83D6C8F8E8FF789185CEDCBCDC9E08C14D39F0E707F9D)
+      trust-store: /platform/certs/aeusapp-truststore.jks
+      trust-store-password: ENC(E2C83D6C8F8E8FF789185CEDCBCDC9E08C14D39F0E707F9D)
+
+
+## SPRING CONFIGURATIONS
+spring:
+  # ZIPKIN CONFIGURATIONS
+  zipkin:
+      baseUrl: https://monitor.aeus.davinta.com:5000
+
+  # CONSUL CONFIGURATIONS
+  cloud:
+    consul:
+      host: consul.aeus.davinta.com
+      port: 8500
+
+  # DATASOURCE CONFIGURATIONS
+  datasource:
+    url: jdbc:mysql://mysql.aeus.davinta.com:3306/platform_groupmanagement?useSSL=false
+    username: platform_groupmanagement_user
+    password: ENC(CB6F4E5F8C8BF9666A90075C4C7AF9D982C1E21D909CF932358D1575CF8A37D2)
+
+
+## REDIS CONFIGURATIONS
+redis:
+  server:
+    host: redis.aeus.davinta.com
+    port: 6379
+    password: ENC(6306791701D93C654316B3292533A2D9BA2A46C91434FB32)
+    password.enabled: true
+
+
+## SERVICE CONFIGURATIONS
+AdminService:
+  url: https://admin.aeus.davinta.com:5300
+EnrollmentService:
+  url: https://admin.aeus.davinta.com:5600
+FamilySurveyService:
+  url: https://admin.aeus.davinta.com:6200

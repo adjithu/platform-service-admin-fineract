@@ -1,0 +1,34 @@
+import org.gradle.internal.os.OperatingSystem
+
+if (OperatingSystem.current().isWindows()) {
+    task pathingJar(type: Jar) {
+        dependsOn configurations.runtime
+        appendix = 'pathing'
+
+        doFirst {
+            manifest {
+                // Build the Class-Path for absolute paths based on runtime dependencies.
+                attributes "Class-Path": configurations.runtime.files.collect {
+                    it.toURL().toString().replaceFirst(/file:\/+/, '/')
+                }.join(' ')
+            }
+        }
+    }
+
+    // This gradle task will be called by `grails run-app`.
+    bootRun {
+        dependsOn pathingJar
+        doFirst {
+            // Add the compiled app classed to the classpath of the pathing jar.
+            classpath = files("$buildDir/classes/main", "$buildDir/resources/main", "$projectDir/gsp-classes", pathingJar.archivePath)
+        }
+    }
+
+    // Do the same for like for bootRun for the run task executable by `gradle run`.
+    run {
+        dependsOn pathingJar
+        doFirst {
+            classpath = files("$buildDir/classes/main", "$buildDir/resources/main", "$projectDir/gsp-classes", pathingJar.archivePath)
+        }
+    }
+}

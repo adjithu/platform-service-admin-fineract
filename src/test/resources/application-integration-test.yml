@@ -1,0 +1,82 @@
+## SSL CONFIGURATIONS
+server:
+  port: 8090
+  ssl:
+    enabled: false
+    key-alias: aeusapp
+    key-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+    key-store: D:/platform/certs/aeusapp-keystore.jks
+    key-store-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+    trust-store: D:/platform/certs/aeusapp-truststore.jks
+    trust-store-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+  tomcat:
+    apr.enabled: false
+    accept-count: 50
+    max-connections: 1024
+    max-threads: 100
+    min-spare-threads: 20
+
+flyway:
+  enabled: false
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+
+## SPRING CONFIGURATIONS
+spring:
+  datasource:
+        url: jdbc:h2:file:~/h2/integration_test_db;DB_CLOSE_ON_EXIT=FALSE
+        username: sa
+        password:
+        driverClassName: org.h2.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: update
+  # ZIPKIN CONFIGURATIONS
+  zipkin:
+      baseUrl: http://localhost:5000
+
+  ## SLEUTH CONFIGURATIONS
+  sleuth:
+    enabled: false
+
+  # CONSUL CONFIGURATIONS
+  cloud:
+    consul:
+      host: 192.168.56.101
+      port: 8500
+
+## JASYPT PROPERTY ENCRYPTOR
+jasypt:
+  encryptor:
+    algorithm: PBEWITHSHA1ANDDESEDE
+    stringOutputType: hexadecimal
+    bean: encryptorBean
+    providerName: SunJCE
+    password: ${JASYPT_ENCRYPTOR_PASSWORD:aeusapp@123}
+
+rest:
+  client:
+    ssl:
+      enabled: false
+      key-alias: aeusapp
+      key-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+      key-store: D:/platform/certs/aeusapp-keystore.jks
+      key-store-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+      trust-store: D:/platform/certs/aeusapp-truststore.jks
+      trust-store-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+
+
+## SERVICE CONFIGURATIONS
+AdminService:
+  url: http://localhost:8090
+EnrollmentService:
+  url: http://localhost:5600
+FamilySurveyService:
+  url: http://localhost:6200
+

@@ -1,0 +1,71 @@
+#### PLATFORM GROUPMANAGEMENT SERVICE APPLICATION BANK CONFIGURATIONS
+
+## SSL CONFIGURATIONS
+server:
+  ssl:
+    enabled: false
+    key-alias: aeusapp
+    key-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+    key-store: /platform/certs/aeusapp-keystore.jks
+    key-store-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+    trust-store: /platform/certs/aeusapp-truststore.jks
+    trust-store-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+
+
+## REST CLIENT SSL CONFIGURATIONS
+rest:
+  client:
+    ssl:
+      enabled: false
+      key-alias: aeusapp
+      key-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+      key-store: /platform/certs/aeusapp-keystore.jks
+      key-store-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+      trust-store: /platform/certs/aeusapp-truststore.jks
+      trust-store-password: ENC(42039B89B9855AB0FF016ABAF3D1718BDE2B3F3093845587)
+
+
+## SPRING CONFIGURATIONS
+spring:
+  # ZIPKIN CONFIGURATIONS
+  zipkin:
+      baseUrl: http://monitor-service:5000
+
+  # CONSUL CONFIGURATIONS
+  cloud:
+    consul:
+      host: demo-consul-consul.default
+      port: 8500
+
+  # DATASOURCE CONFIGURATIONS
+  datasource:
+    url: jdbc:mysql://onpfdb.chiffejdc0w5.ap-south-1.rds.amazonaws.com:3306/platform_groupmanagement?useSSL=false
+    username: demoadmin
+    password: ENC(3E6CF924121CA6EFF7D1139A7C4A9B967712D041B413FB83)
+
+
+## REDIS CONFIGURATIONS
+redis:
+  server:
+    host: onepfdemo.qmaahw.ng.0001.aps1.cache.amazonaws.com
+    port: 6379
+    password: ENC(402B1482EA0F7039B0D95CA514944870CE1655D218E8EAC51F1A0AF7356CB749BACBB8CC12AADD1B39078525ED3A484E4B9603D249A2CE1261875FCFA0D4FDDF3383938253377A218FA82063205EE10153730AE5D792F2A62FAAF3AB70C2C87725819FF39324568E2A9D826A64135890A9B7BFAE4E99479C471A1C0DCD016AB5EDEE45E3BD9B5DB7727CCE49C98A9A41)
+    password.enabled: false
+
+
+## TRANSACTION CONFIGURATIONS
+transaction:
+  aualicense:
+    auaCode: STGSYND001
+    subAuaCode: STGSYND001
+    auaLicenseKey: ENC(D730344C165A24967DB3F57165744F1D4F623D6BC1961FEA9DAAC522DF1EBA24C6EB8C4B65D3AA28766AD12E11899AC46B1B32CA6555D5B5A8463A3BF38EDD4B)
+
+
+## SERVICE CONFIGURATIONS
+AdminService:
+  url: http://admin-service:5300
+EnrollmentService:
+  url: http://enrollment-service:5600
+FamilySurveyService:
+  url: http://familysurvey-service:6200
+

@@ -1,0 +1,88 @@
+// Custom aeus distribution
+
+ext.versionBuild = System.getenv("BUILD_NUMBER") ?: "1"
+
+applicationDistribution.from("src/main/resources/") {
+  into "conf"
+}
+
+applicationDistribution.from("src/main/scripts/") {
+  into "bin"
+  fileMode = 0550
+}
+
+jar {
+  from sourceSets.main.resources 
+  exclude("*.*")
+}
+
+startScripts {
+  classpath += files('$APP_HOME/XxxAPlaceHolderForConfxxX')
+  doLast {
+    def windowsScriptFile = file getWindowsScript()
+    def unixScriptFile    = file getUnixScript()
+    windowsScriptFile.text = windowsScriptFile.text.replace('%APP_HOME%\\lib\\XxxAPlaceHolderForConfxxX', '%APP_HOME%\\conf')
+    unixScriptFile.text  = unixScriptFile.text.replace('$APP_HOME/lib/XxxAPlaceHolderForConfxxX', '$APP_HOME/conf')
+  }
+}
+
+docker {
+  baseImage "openjdk:8-jdk-alpine"
+}
+
+distDocker {
+    runCommand "apk --update add bash coreutils curl nano tar"
+    runCommand "rm -rf /var/cache/apk/*"
+    runCommand "mkdir -p /appdata/logs/groupmanagement-service"
+    runCommand "mkdir -p /platform/data/recon/exceptions"
+}
+
+task distRpm(type: Rpm, dependsOn: 'distTar') {
+
+  packageName "${project.name}" 
+  version "${project.versionMajor}.${project.versionMinor}.${project.versionPatch}"
+  release "${versionBuild}"  
+  os LINUX
+  type BINARY
+  arch NOARCH
+  
+  user "aeusapp"
+  permissionGroup "aeusapp"
+
+  preInstall file('src/main/scripts/rpm/preinstall.sh')
+  postInstall file('src/main/scripts/rpm/postinstall.sh')
+  preUninstall file('src/main/scripts/rpm/preuninstall.sh')
+
+  directory('/appdata/logs/groupmanagement-service')
+  directory('/platform/data/recon/exceptions')
+
+  into "/appdata/${project.name}-${version}-${release}"
+
+  from("src/main/resources") {
+    into "conf"
+  }
+
+  from("src/main/scripts") {
+    into "bin"
+    exclude '**/rpm/*.*'
+    fileMode = 0555
+  }
+
+  from("$buildDir/scripts") {
+    into "bin"
+    fileMode = 0550
+  }
+
+  from(configurations.runtime) {
+    into "lib"
+  }
+  
+  from(project.jar.outputs.files.singleFile) {
+    into "lib"
+  }
+
+  link("/appdata/${project.name}", "/appdata/${project.name}-${version}-${release}")
+
+}
+
+build.shouldRunAfter distRpm
